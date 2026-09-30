@@ -16,4 +16,13 @@ def divide(a, b):
     """
     if b == 0:
         raise ValueError("Division by zero is not allowed")
-    return a / b
+    result = a / b
+    # Return int if the result is an integer value to preserve expected type
+    try:
+        if result.is_integer():
+            return int(result)
+    except AttributeError:
+        # result may not have is_integer (e.g., Decimal), fallback to simple check
+        if isinstance(result, (int, float)) and result == int(result):
+            return int(result)
+    return result
